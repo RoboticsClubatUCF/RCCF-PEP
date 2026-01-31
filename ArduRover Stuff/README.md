@@ -22,3 +22,10 @@ ArduPilot disarms the motor by sending a neutral PWM signal (1500) to the thrott
 ### reverse_servo_3.lua
 We could map the throttle switch directly to the throttle motor which would mean that all the way down would be full reverse, all the way up full speed forward, and in the middle would cut throttle. However, this script allows for the mapping of a switch to reverse the motor so we can use the full range of the throttle stick. The boat will mostly be piloted forwards so this makes fine speed control easier. 
 This makes for safer piloting as you can more quickly kill throttle by flicking the throttle stick straight down and have more precise control of speed.
+
+## SiK Radio
+The radio operates at 915 Mhz. To connect to the radio via Mission Planner:
+- Connect one of the radios to your computer vis USA cable
+- Connect the other radio to the ArduRover
+- Open Mission Planner and open the Setup tab. In the top left, select the port and 57600 for the baud. Click connect.
+- Once connected, click Load Settings
