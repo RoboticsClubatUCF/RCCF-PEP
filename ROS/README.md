@@ -25,7 +25,7 @@ sudo apt install ros-jazzy-mavros ros-jazzy-mavros-msgs ros-jazzy-sensor-msgs
 
 
 ## Install package
-Assuming the parent repo is cloned at ~/RCCF_PEP:
+Assuming the parent repo is cloned at ~/RCCF_PEP (make sure you have also run `git submodule update --init`):
 ```bash
 mkdir ~/ros_ws
 ln -s ~/RCCF_PEP/ROS/ ~/ros_ws/src
