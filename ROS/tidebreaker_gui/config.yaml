@@ -1,0 +1,36 @@
+# Tidebreaker GUI - ROS Topic Configuration
+#
+# Copy this file and customize the topic names to match your system configuration.
+# This is useful when your MAVROS or VESC drivers publish to different topics.
+
+# MAVROS Flight Controller Topics
+# These are the default MAVROS topics - adjust if your setup differs
+mavros:
+  state: '/mavros/state'
+  vfr_hud: '/mavros/vfr_hud'
+  global_position: '/mavros/global_position/global'
+  imu: '/mavros/imu/data'
+  rc_in: '/mavros/rc/in'
+  rc_out: '/mavros/rc/out'
+
+# VESC Motor Controller Topics
+# Adjust these based on your VESC ROS driver configuration
+vesc:
+  state: '/vesc/sensors/core'
+  # Additional VESC topics that may be useful
+  dutycycle: '/vesc/commands/motor/speed'
+  current: '/vesc/sensors/current'
+  voltage: '/vesc/sensors/voltage'
+  temperature: '/vesc/sensors/temp_pcb'
+
+# Optional: Battery/Power System
+battery:
+  enabled: false
+  voltage: '/battery/voltage'
+  current: '/battery/current'
+  soc: '/battery/soc'  # State of charge percentage
+
+# Advanced: Custom waypoint topics (for future implementation)
+waypoints:
+  input_topic: '/boat/waypoints/input'
+  active_topic: '/boat/waypoints/active'
