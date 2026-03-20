@@ -28,7 +28,7 @@ sudo apt install ros-jazzy-mavros ros-jazzy-mavros-msgs ros-jazzy-sensor-msgs
 Assuming the parent repo is cloned at ~/RCCF_PEP:
 ```bash
 mkdir ~/ros_ws
-ln -s ~/RCCF_PEP/ROS ~/ros_ws/src
+ln -s ~/RCCF_PEP/ROS/ ~/ros_ws/src
 cd ros_ws
 colcon build --symlink-install
 echo "source ~/ros_ws/install/setup.bash" >> ~/.bashrc
