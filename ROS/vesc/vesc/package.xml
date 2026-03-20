@@ -14,7 +14,7 @@
   <author email="boulet@ll.mit.edu">Michael T. Boulet</author>
   <author email="josh.whitley@autoware.org">Joshua Whitley</author>
 
-  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>ament_cmake</buildtool_depend>
 
   <exec_depend>vesc_driver</exec_depend>
   <exec_depend>vesc_msgs</exec_depend>
