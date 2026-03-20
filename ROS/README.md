@@ -20,7 +20,7 @@ Edit `~/.bashrc` by adding `source /opt/ros/jazzy/setup.bash` to the end.
 
 ## Install Packages:
 ```bash
-sudo apt install ros-jazzy-mavros ros-jazzy-mavros-msgs ros-jazzy-sensor-msgs
+sudo apt install ros-jazzy-mavros ros-jazzy-mavros-msgs ros-jazzy-sensor-msgs ros-jazzy-ackermann-msgs ros-jazzy-serial
 ```
 
 

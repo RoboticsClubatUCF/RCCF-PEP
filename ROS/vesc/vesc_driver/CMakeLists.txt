@@ -1,68 +1,56 @@
 cmake_minimum_required(VERSION 3.5)
 project(vesc_driver)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# Set minimum C++ standard to C++14
+if(NOT "${CMAKE_CXX_STANDARD_COMPUTED_DEFAULT}")
+  message(STATUS "Changing CXX_STANDARD from C++98 to C++14")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+elseif("${CMAKE_CXX_STANDARD_COMPUTED_DEFAULT}" STREQUAL "98")
+  message(STATUS "Changing CXX_STANDARD from C++98 to C++14")
+  set(CMAKE_CXX_STANDARD 14)
+endif()
 
-find_package(ament_cmake REQUIRED)
-find_package(pluginlib REQUIRED)
-find_package(rclcpp REQUIRED)
-find_package(rclcpp_components REQUIRED)
-find_package(serial REQUIRED)
-find_package(std_msgs REQUIRED)
-find_package(vesc_msgs REQUIRED)
+find_package(ament_cmake_auto REQUIRED)
+ament_auto_find_build_dependencies()
+
+find_package(Threads)
 
 ###########
 ## Build ##
 ###########
 
-# node executable
-add_executable(vesc_driver_node src/vesc_driver_node.cpp
-                                src/vesc_driver.cpp
-                                src/vesc_interface.cpp
-                                src/vesc_packet.cpp
-                                src/vesc_packet_factory.cpp)
-target_include_directories(vesc_driver_node PRIVATE include)
-ament_target_dependencies(vesc_driver_node
-  rclcpp
-  std_msgs
-  vesc_msgs
-  serial
+# node library
+ament_auto_add_library(${PROJECT_NAME} SHARED
+  src/vesc_driver.cpp
+  src/vesc_interface.cpp
+  src/vesc_packet.cpp
+  src/vesc_packet_factory.cpp
+)
+target_link_libraries(${PROJECT_NAME}
+  ${CMAKE_THREAD_LIBS_INIT}
+)
+rclcpp_components_register_node(${PROJECT_NAME}
+  PLUGIN vesc_driver::VescDriver
+  EXECUTABLE ${PROJECT_NAME}_node
 )
 
-# nodelet library
-add_library(vesc_driver_nodelet src/vesc_driver_nodelet.cpp
-                                src/vesc_driver.cpp
-                                src/vesc_interface.cpp
-                                src/vesc_packet.cpp
-                                src/vesc_packet_factory.cpp)
-target_include_directories(vesc_driver_nodelet PRIVATE include)
-ament_target_dependencies(vesc_driver_nodelet
-  rclcpp_components
-  pluginlib
-  std_msgs
-  vesc_msgs
-  serial
+ament_auto_add_executable(
+  vesc_device_namer
+  src/vesc_device_namer.cpp
+  src/vesc_device_uuid_lookup.cpp
 )
-rclcpp_components_register_node(vesc_driver_nodelet PLUGIN "vesc_driver::VescDriverNodelet" EXECUTABLE vesc_driver_nodelet_node)
 
 #############
-## Install ##
+## Testing ##
 #############
 
-install(TARGETS vesc_driver_node
-  DESTINATION lib/${PROJECT_NAME}
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  ament_lint_auto_find_test_dependencies()
+endif()
+
+ament_auto_package(
+  INSTALL_TO_SHARE
+    launch
+    params
 )
-
-install(TARGETS vesc_driver_nodelet
-  LIBRARY DESTINATION lib
-)
-
-install(DIRECTORY include/${PROJECT_NAME}/
-        DESTINATION include/${PROJECT_NAME}/)
-install(FILES vesc_driver_nodelet.xml
-        DESTINATION share/${PROJECT_NAME}/)
-install(DIRECTORY launch/
-        DESTINATION share/${PROJECT_NAME}/launch)
-
-ament_package()
